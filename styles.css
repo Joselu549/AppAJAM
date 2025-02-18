@@ -1,5 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+:root {
+  --primary-color: #ffc800;
+  --secondary-color: #fed136;
+  --text-color: #fff;
+  --background-color: rgba(128, 128, 128, 0.4);
+  --button-hover-color: #d6800f;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,24 +32,22 @@ form img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  margin-bottom: 20px;
   border: rgba(255, 255, 255) 2px solid;
   background-color: rgba(255, 255, 255, 0.2);
   position: absolute;
   margin-top: -75px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-left: -50px;
 }
 
 h1 {
   margin-top: 40px;
   margin-bottom: 20px;
-  color: #fed136;
+  color: var(--primary-color);
 }
 
 p {
   margin: 5px 0;
-  color: #fff;
+  color: var(--text-color);
   font-size: 14px;
   text-align: left;
 }
@@ -48,7 +56,7 @@ input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
-  color: #fff;
+  color: var(--text-color);
   background: transparent;
   border: none;
   border-bottom: 2px solid white;
@@ -64,7 +72,7 @@ div {
 a {
   text-decoration: none;
   font-weight: bold;
-  color: #fff;
+  color: var(--text-color);
   font-size: 14px;
 }
 
@@ -73,8 +81,8 @@ a:hover {
 }
 
 button {
-  background-color: #fed136;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-color);
   font-weight: bold;
   border: none;
   padding: 10px 15px;
@@ -83,9 +91,10 @@ button {
   border-radius: 5px;
   font-size: 16px;
   transition: 0.3s;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
-  background-color: #c5a32a;
+  background-color: var(--button-hover-color);
   transition: 0.3s;
 }
