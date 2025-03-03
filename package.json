@@ -1,0 +1,30 @@
+{
+  "name": "appajam",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joselu549/AppAJAM.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Joselu549/AppAJAM/issues"
+  },
+  "homepage": "https://github.com/Joselu549/AppAJAM#readme",
+  "description": "",
+  "dependencies": {
+    "db-local": "^3.1.0",
+    "dotenv": "16.4.7",
+    "express": "4.21.2"
+  },
+  "devDependencies": {
+    "standard": "^17.1.2"
+  }
+}

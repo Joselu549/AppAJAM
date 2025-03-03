@@ -1,9 +1,12 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import { UserRepository } from '../user-repository.js'
 
 dotenv.config()
 
 const app = express()
+
+app.use(express.json())
 
 const port = process.env.PORT ?? 3000
 
@@ -12,8 +15,21 @@ app.get('/', (req, res) => {
 })
 
 app.post('/login', (req, res) => {})
-app.post('/register', (req, res) => {})
+app.post('/register', (req, res) => {
+  const { username, password } = req.body
+  console.log(req.body)
+
+  try {
+    const id = UserRepository.create({ username, password })
+    res.send({ id })
+  } catch (error) {
+    // Arreglar tratamiento del error
+    res.status(400).send(error.message)
+  }
+})
 app.post('/logout', (req, res) => {})
+
+app.get('/protected', (req, res) => {})
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
