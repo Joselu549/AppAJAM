@@ -1,21 +1,27 @@
 import crypto from 'node:crypto'
-import DBLocal from 'db-local'
+import { createClient } from '@libsql/client'
 import bcrypt from 'bcrypt'
 import zod from 'zod'
+import dotenv from 'dotenv'
 
-const { Schema } = DBLocal({ path: './db' })
+dotenv.config()
 
-const User = Schema('User', {
-  _id: { type: String, required: true },
-  email: { type: String, required: true },
-  username: { type: String, required: true },
-  password: { type: String, required: true }
+const db = createClient({
+  url: 'libsql://optimal-armadillo-joselu549.turso.io',
+  authToken: process.env.DB_TOKEN
 })
+
+await db.execute(`CREATE TABLE IF NOT EXISTS users (
+  id STRING PRIMARY KEY,
+  username STRING NOT NULL,
+  email STRING NOT NULL,
+  password STRING NOT NULL
+)`)
 
 const usuarioSchema = zod.object({
   email: zod
     .string()
-    .regex(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/, 'Email inválido'),
+    .regex(/^[a-zA-Z0-9._-]+@ajambanda\.es$/, 'Email inválido'),
   username: zod
     .string()
     .max(20, 'El nombre de usuario no puede tener más de 20 caracteres')
@@ -31,23 +37,27 @@ export class UserRepository {
     if (!res.success) {
       throw new Error(res.error.errors[0].message)
     }
-    //  2. Comprobamos que el usuario no existe
 
-    const user = User.findOne({ email })
-    if (user) {
+    const results = await db.execute({
+      sql: 'SELECT * FROM users WHERE email = ?',
+      args: [email]
+    })
+
+    if (results.rows.length > 0) {
       throw new Error('E-mail already exists')
     }
+    console.log('He comprobado que el usuario no existe')
     const id = crypto.randomUUID()
     const hashedPassword = await bcrypt.hash(password, 10) // Devuelve una promesa
-
-    User.create({
-      _id: id,
-      email,
-      username,
-      password: hashedPassword
-    }).save()
-
-    return id
+    const sql =
+      'INSERT INTO users (id, email, username, password) VALUES (?, ?, ?, ?)'
+    try {
+      await db.execute(sql, [id, email, username, hashedPassword])
+      console.log('Usuario registrado correctamente')
+      return id
+    } catch (error) {
+      console.error('Error al registrar el usuario: ', error)
+    }
   }
 
   static async login({ email, password }) {
@@ -56,8 +66,15 @@ export class UserRepository {
       throw new Error(res.error.errors[0].message)
     }
 
-    const user = User.findOne({ email })
-    if (!user) {
+    const result = await db.execute({
+      sql: 'SELECT * FROM users WHERE email = ?',
+      args: [email]
+    })
+
+    const user = result.rows[0]
+    console.log('Usuario encontrado: ', user)
+
+    if (!result.rows.length) {
       throw new Error('User not found')
     }
 

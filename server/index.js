@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'
 import { UserRepository } from '../user-repository.js'
-import { createClient } from '@libsql/client'
 
 dotenv.config()
 
@@ -45,7 +44,6 @@ app.get('/register', (req, res) => res.render('register'))
 
 app.post('/register', async (req, res) => {
   const { email, username, password } = req.body
-
   try {
     const id = await UserRepository.create({ email, username, password })
     res.redirect('/protected')
