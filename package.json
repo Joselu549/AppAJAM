@@ -1,6 +1,6 @@
 {
   "name": "appajam",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -20,11 +20,20 @@
   "homepage": "https://github.com/Joselu549/AppAJAM#readme",
   "description": "",
   "dependencies": {
-    "db-local": "^3.1.0",
+    "@libsql/client": "^0.14.0",
+    "bcrypt": "5.1.1",
+    "cookie-parser": "^1.4.7",
+    "db-local": "3.1.0",
     "dotenv": "16.4.7",
-    "express": "4.21.2"
+    "ejs": "3.1.10",
+    "express": "4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "3.24.2"
   },
   "devDependencies": {
     "standard": "^17.1.2"
+  },
+  "eslintConfig": {
+    "extends": "standard"
   }
 }
