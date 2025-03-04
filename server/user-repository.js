@@ -31,7 +31,7 @@ const usuarioSchema = zod.object({
     .min(6, 'La contraseña debe tener al menos 6 caracteres')
 })
 export class UserRepository {
-  static async create({ email, username, password }) {
+  static async create ({ email, username, password }) {
     // 1. Comprobamos que los datos sean correctos
     const res = usuarioSchema.safeParse({ email, username, password })
     if (!res.success) {
@@ -46,7 +46,7 @@ export class UserRepository {
     if (results.rows.length > 0) {
       throw new Error('E-mail already exists')
     }
-    console.log('He comprobado que el usuario no existe')
+
     const id = crypto.randomUUID()
     const hashedPassword = await bcrypt.hash(password, 10) // Devuelve una promesa
     const sql =
@@ -60,7 +60,7 @@ export class UserRepository {
     }
   }
 
-  static async login({ email, password }) {
+  static async login ({ email, password }) {
     const res = usuarioSchema.safeParse({ email, password })
     if (!res.success) {
       throw new Error(res.error.errors[0].message)
@@ -72,13 +72,12 @@ export class UserRepository {
     })
 
     const user = result.rows[0]
-    console.log('Usuario encontrado: ', user)
 
     if (!result.rows.length) {
       throw new Error('User not found')
     }
 
-    const isValid = await bcrypt.compare(password, user.password)
+    const isValid = bcrypt.compare(password, user.password)
     if (!isValid) {
       throw new Error('Invalid password')
     }

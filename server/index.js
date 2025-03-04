@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'
-import { UserRepository } from '../user-repository.js'
+import { UserRepository } from './user-repository.js'
 
 dotenv.config()
 
@@ -45,7 +45,7 @@ app.get('/register', (req, res) => res.render('register'))
 app.post('/register', async (req, res) => {
   const { email, username, password } = req.body
   try {
-    const id = await UserRepository.create({ email, username, password })
+    await UserRepository.create({ email, username, password })
     res.redirect('/protected')
   } catch (error) {
     // Arreglar tratamiento del error
@@ -86,7 +86,6 @@ app.get('/logout', (req, res) => {
 })
 
 app.get('/protected', async (req, res) => {
-  // TODO: Verificar token
   const { user } = req.session
   if (!user) return res.status(403).send('Access not authorized')
   res.render('protected', { username: user.username })
@@ -95,19 +94,3 @@ app.get('/protected', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
 })
-
-// app.get('/images/logo.jpg', (req, res) => {
-//   res.sendFile(process.cwd() + '/public/images/logo.jpg')
-// })
-
-// app.get('/images/background.jpg', (req, res) => {
-//   res.sendFile(process.cwd() + '/public/images/background.jpg')
-// })
-
-// app.get('/css/styles.css', (req, res) => {
-//   res.sendFile(process.cwd() + '/public/css/styles.css')
-// })
-
-// app.use((req, res) => {
-//   res.status(404).sendFile(process.cwd() + '/public/views/404.html')
-// })
