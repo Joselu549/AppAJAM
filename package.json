@@ -1,39 +1,27 @@
 {
-  "name": "appajam",
-  "version": "0.0.1",
-  "main": "index.js",
+  "name": "reservaula",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch server/index.js"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Joselu549/AppAJAM.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Joselu549/AppAJAM/issues"
-  },
-  "homepage": "https://github.com/Joselu549/AppAJAM#readme",
-  "description": "",
   "dependencies": {
-    "@libsql/client": "^0.14.0",
-    "bcrypt": "5.1.1",
-    "cookie-parser": "^1.4.7",
-    "db-local": "3.1.0",
-    "dotenv": "16.4.7",
-    "ejs": "3.1.10",
-    "express": "4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "zod": "3.24.2"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "standard": "^17.1.2"
-  },
-  "eslintConfig": {
-    "extends": "standard"
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react-swc": "^3.8.0",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "vite": "^6.2.0"
   }
 }
