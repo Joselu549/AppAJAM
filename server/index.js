@@ -4,8 +4,6 @@ import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'
 import { UserRepository } from './user-repository.js'
 
-dotenv.config()
-
 const app = express()
 
 app.set('view engine', 'ejs')
